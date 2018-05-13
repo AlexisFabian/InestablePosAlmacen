@@ -1,0 +1,8 @@
+﻿@model ListaProductosViewModel
+
+
+@foreach (var productos in Model.Productos)
+{
+    @Html.Partial("DesplegarProductos", productos)
+
+}
