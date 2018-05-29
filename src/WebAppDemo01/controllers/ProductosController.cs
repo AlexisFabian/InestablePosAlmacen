@@ -58,5 +58,20 @@ namespace WebAppDemo01.controllers
             }
             return View(producto);
         }
+
+        public ViewResult nuevofiltro()
+        {
+            IEnumerable<Productos> productos;
+            ListaProductosViewModel listaProductosViewModel = new ListaProductosViewModel();
+
+            productos = _productosRepositorio.Productos.Where(c => c.CodigoProducto == 1);
+
+
+            listaProductosViewModel.CategoriasProductos = "Lista de productos con filtro";
+
+
+
+            return View(listaProductosViewModel);
+        }
     }
 }

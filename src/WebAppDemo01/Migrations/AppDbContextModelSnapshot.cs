@@ -16,22 +16,6 @@ namespace WebAppDemo01.Migrations
                 .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("WebAppDemo01.models.AreasTrabajo", b =>
-                {
-                    b.Property<int>("CodigoArea")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("DescripcionArea");
-
-                    b.Property<string>("JefeArea");
-
-                    b.Property<string>("NombreArea");
-
-                    b.HasKey("CodigoArea");
-
-                    b.ToTable("AreasTrabajo");
-                });
-
             modelBuilder.Entity("WebAppDemo01.models.CarroComprasItems", b =>
                 {
                     b.Property<int>("codigoProductoSeleccionado")
@@ -62,6 +46,20 @@ namespace WebAppDemo01.Migrations
                     b.HasKey("CodigoCatProducto");
 
                     b.ToTable("CategoriasProductos");
+                });
+
+            modelBuilder.Entity("WebAppDemo01.models.CatUsuarios", b =>
+                {
+                    b.Property<int>("CodigoCatUo")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("DescripcionCatUo");
+
+                    b.Property<string>("NombreCatUo");
+
+                    b.HasKey("CodigoCatUo");
+
+                    b.ToTable("CategoriasUsuarios");
                 });
 
             modelBuilder.Entity("WebAppDemo01.models.Productos", b =>
@@ -107,27 +105,25 @@ namespace WebAppDemo01.Migrations
                     b.Property<int>("CodigoUsuario")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Acceso");
+                    b.Property<string>("ApellidoUsuario");
 
-                    b.Property<string>("ApellidoUsuarios");
+                    b.Property<int?>("CatUsuariosCodigoCatUo");
 
-                    b.Property<string>("Carago");
+                    b.Property<string>("Contraseña");
 
-                    b.Property<string>("Clave");
+                    b.Property<bool>("ListaNegra");
 
-                    b.Property<int>("CodigoArea");
+                    b.Property<string>("NombreUsuario");
 
-                    b.Property<int>("CodigoNivel");
+                    b.Property<string>("UserName");
 
-                    b.Property<bool>("Estado");
+                    b.Property<bool>("UsuariosInactivos");
 
-                    b.Property<string>("FechaCreacion");
-
-                    b.Property<string>("NombreUsuarios");
+                    b.Property<string>("fechacreacion");
 
                     b.HasKey("CodigoUsuario");
 
-                    b.HasIndex("CodigoArea");
+                    b.HasIndex("CatUsuariosCodigoCatUo");
 
                     b.ToTable("Usuarios");
                 });
@@ -148,10 +144,9 @@ namespace WebAppDemo01.Migrations
 
             modelBuilder.Entity("WebAppDemo01.models.Usuarios", b =>
                 {
-                    b.HasOne("WebAppDemo01.models.AreasTrabajo", "AreasTrabajo")
+                    b.HasOne("WebAppDemo01.models.CatUsuarios", "CatUsuarios")
                         .WithMany("Usuarios")
-                        .HasForeignKey("CodigoArea")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CatUsuariosCodigoCatUo");
                 });
         }
     }

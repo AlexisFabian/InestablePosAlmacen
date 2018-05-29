@@ -1,13 +1,44 @@
 ﻿@model CarroComprasViewModel
 
-@if(Model.CarroCompras.CarroComprasItems.Count > 0)
+
+@if (Model.CarroCompras.CarroComprasItems.Count > 0)
 {
-    <li>
-        <a>
-            <span class="glyphicon glyphicon-shopping-cart"></span>
-            <span id="cart-status">
-                @Model.CarroCompras.CarroComprasItems.Count
-            </span>
-        </a>
-    </li>
+<div class="header-button-item has-noti js-item-menu">
+    <i class="zmdi zmdi-shopping-cart"></i>
+    <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown">
+        <div class="notifi__title">
+            <p>Tu Tienes @Model.CarroCompras.CarroComprasItems.Count compras por Finalizar</p>
+        </div>
+    
+        <div class="notifi__item">
+            <div class="bg-c3 img-cir img-40">
+                <i class="zmdi zmdi-file-text"></i>
+            </div>
+        </div>
+        <div class="notifi__footer">
+            <a href="#">Todas las compras</a>
+        </div>
+    </div>
+</div>
+
+}
+else
+{
+    <div class="header-button-item has-noti js-item-menu">
+        <i class="zmdi zmdi-shopping-cart"></i>
+        <div class="notifi-dropdown notifi-dropdown--no-bor js-dropdown">
+            <div class="notifi__title">
+                <p>Tu Tienes 0 compras por Finalizar</p>
+            </div>
+
+            <div class="notifi__item">
+                <div class="bg-c3 img-cir img-40">
+                    <i class="zmdi zmdi-shopping-cart"></i>
+                </div>
+            </div>
+            <div class="notifi__footer">
+                <a href="#">Todas Las Compras</a>
+            </div>
+        </div>
+    </div>
 }

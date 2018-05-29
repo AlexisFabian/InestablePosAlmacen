@@ -40,7 +40,11 @@ namespace WebAppDemo01
             //services.AddTransient<IProductosRepositorio, MockProductosRepositorio>();
             services.AddTransient<ICatProductosRepositorio, CatProductosRepositorio>();
             services.AddTransient<IProductosRepositorio, ProductosRepositorio>();
-            services.AddTransient<IAreasTrabajoRepositorio, AreasTrabajoRepositorio>();
+
+            services.AddTransient<ICatUsuariosRepositorio, CatUsuariosRepositorio>();
+            services.AddTransient<IUsuariosRepositorio, UsuariosRepositorio>();
+
+            services.AddTransient<IUsuariosRepositorio, UsuariosRepositorio>();
 
 
             //registros para que la clase CarroCompras pueda trabajar con el DBContext
@@ -75,11 +79,20 @@ namespace WebAppDemo01
                     template: "Productos/{action}/{categoriasProductos?}",
                     defaults: new { Controller = "Productos", action = "ListaProductos" });
 
-            routes.MapRoute(
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    name: "Detalles",
+                    template: "{controller=ProductosController}/{action=Detalles}/{id?}");
+
+                routes.MapRoute(
+                  name: "ListaProductos",
+                  template: "{controller=ProductosController}/{action=ListaProductos}/{id?}");
             });
             DataInicio.AgregarData(app);
+            DataUsuarios.AgregarData(app);
         }
     }
 }

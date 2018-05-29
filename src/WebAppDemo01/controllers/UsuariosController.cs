@@ -13,31 +13,50 @@ namespace WebAppDemo01.controllers
     public class UsuariosController : Controller
     {
         //objetos de solo lectura que sera instancias de las clases repositorios
-
-        private readonly IAreasTrabajoRepositorio _areastrabajoRepositorio;
-        private readonly IUsuariosRepositorio _usuariosRepositorio;
+        private readonly ICatUsuariosRepositorio _catUsuariosRepositorio;
+        private readonly IUsuariosRepositorio _UsuariosRepositorio;
 
         //constructor de esta clase controller
-
-    public UsuariosController(IAreasTrabajoRepositorio areastrabajoRepositorio, IUsuariosRepositorio usuariosRepositorio)
+        public UsuariosController(ICatUsuariosRepositorio catUsuariosRepositorio, IUsuariosRepositorio UsuariosRepositorio)
         {
-            _areastrabajoRepositorio = areastrabajoRepositorio;
-            _usuariosRepositorio = usuariosRepositorio;
-        } //Fin del constructor
+            _catUsuariosRepositorio = catUsuariosRepositorio;
+            _UsuariosRepositorio = UsuariosRepositorio;
+        }//fin del constructor
 
-        //metodo para devolber la vista con datos iyectados
-        public ViewResult ListaUsuarios()
+        //metodo para devolver la vista con datos inyectados
+        public ViewResult ListaUsuarios(string categoriasUsuarios)
         {
-            //objetos para mostrar las categorias de los productos
-            ListaUsuariosViewModel listausuariosViewModel = new ListaUsuariosViewModel();
-            listausuariosViewModel.Usuarios = _usuariosRepositorio.Usuarios;
+            //bug: si la categoria no se digite justo como esta 
+            //almacenada genera un NullReferenceException
+            IEnumerable<Usuarios> usuarios;
+            string categoriaActual = string.Empty;
+            if (string.IsNullOrEmpty(categoriasUsuarios))
+            {
+                usuarios = _UsuariosRepositorio.Usuarios.OrderBy(p => p.CodigoUsuario);
+                categoriaActual = "Todos los Usuarios";
+            }
+            else
+            {
+                usuarios = _UsuariosRepositorio.Usuarios.Where(p => p.CatUsuarios.NombreCatUo == categoriasUsuarios)
+                    .OrderBy(p => p.CodigoUsuario);
+                categoriaActual = _catUsuariosRepositorio.CategoriasUsuarios.FirstOrDefault(c => c.NombreCatUo == categoriasUsuarios).NombreCatUo;
+            }
 
-            //pasando intencionalmente un valor a la variable de la clase
-            listausuariosViewModel.AreasTrabajo = "Lista de Usuarios";
+            return View(new ListaUsuariosViewModel
+            {
+                Usuarios = usuarios,
+                CategoriasUsuarios = categoriaActual
+            });
+        }//fin del metodo ListaProductos
 
-
-            // return View(_productosRepositorio.Productos);
-            return View(listausuariosViewModel);
-        }//fin del metodo listaProductos
+        public IActionResult Detalles(int codigo)
+        {
+            var usuarios = _UsuariosRepositorio.GetUsuariosPorCodigo(codigo);
+            if (usuarios == null)
+            {
+                return NotFound();
+            }
+            return View(usuarios);
+        }
     }
 }

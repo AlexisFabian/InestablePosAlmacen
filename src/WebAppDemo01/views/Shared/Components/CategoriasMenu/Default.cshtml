@@ -1,10 +1,12 @@
 ﻿@model IEnumerable<CatProductos>
 
-<li class="dropdown">
+<li class="has-sub">
     <a asp-controller="Productos"
-       asp-action="Index"
-       class="dropdown-toggle" data-toggle="dropdown">Productos<b class="caret"></b></a>
-    <ul class="dropdown-menu">
+       asp-action="Index">
+        <i class="fa fa-th-large"></i>
+        <span class="bot-line"></span>Productos
+    </a>
+    <ul class="header3-sub-list list-unstyled">
         @foreach (var catproductos in Model)
         {
             <li>
@@ -12,7 +14,6 @@
                    asp-route-categoriaproducto="@catproductos.NombreCatProducto">@catproductos.NombreCatProducto</a>
             </li>
         }
-        <li class="dropdown-divider"></li>
         <li>
             <a asp-controller="Productos" asp-action="ListaProductos" asp-route-categoriaproducto="">Todos los Productos</a>
         </li>

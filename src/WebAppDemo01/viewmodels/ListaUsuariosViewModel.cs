@@ -9,6 +9,6 @@ namespace WebAppDemo01.viewmodels
     public class ListaUsuariosViewModel
     {
         public IEnumerable<Usuarios> Usuarios { get; set; }
-        public string AreasTrabajo { get; set; }
+        public string CategoriasUsuarios { get; set; }
     }
 }

@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CatUsuarios>
+<li class="has-sub">
+    <a asp-controller="Usuarios"
+       asp-action="ListaUsuarios">
+        <i class="fa fa-group"></i>
+        <span class="bot-line"></span>Departamentos
+    </a>
+    <ul class="header3-sub-list list-unstyled">
+        @foreach (var catUsuarios in Model)
+        {
+            <li>
+                <a asp-controller="Usuarios" asp-action="ListaUsuarios"
+                   asp-route-categoriaproducto="@catUsuarios.NombreCatUo">@catUsuarios.NombreCatUo</a>
+            </li>
+        }
+        <li>
+            <a asp-controller="Usuarios" asp-action="ListaUsuarios" asp-route-categoriaproducto="">Todos los Usuarios</a>
+        </li>
+    </ul>
+</li>
